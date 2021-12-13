@@ -10,7 +10,7 @@ class ProductPage(BasePage):
         self.should_be_add_to_basket_button()
         button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         button.click()
-        self.solve_quiz_and_get_code()
+        # self.solve_quiz_and_get_code()
         self.should_be_success_messages()
         self.should_be_equal_product_names()
         self.should_be_equal_product_prices()
@@ -28,3 +28,15 @@ class ProductPage(BasePage):
         page_product_price = self.browser.find_element(*ProductPageLocators.PAGE_PRODUCT_PRICE).text
         success_message_product_price = self.browser.find_element(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_PRICE).text
         assert page_product_price == success_message_product_price, "Product prices on the page and on the success message don't match"
+
+    def should_not_be_success_messages(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_NAME), \
+        "Success message with product name is presented, but should not be"
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_PRICE), \
+        "Success message with product price is presented, but should not be"
+
+    def should_disappear_success_messages(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_NAME), \
+        "Success message with product name hasn't disappeared, but should be"
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_PRICE), \
+        "Success message with product price hasn't disappeared, but should be"
